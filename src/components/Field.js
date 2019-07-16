@@ -1,12 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import params from '../params'
+import Landmine from './Landmine'
 
 export default props => {
-	const { mined, opened, nearMines } = props
+	const { mined, opened, nearMines, exploded } = props
 
 	const styledField = [styled.field]
 	if (opened) styledField.push(styled.opened)
+	if (exploded) styledField.push(styled.exploded)
 	if (styledField.length === 1) styledField.push(styled.regular)
 
 	let color = ''
@@ -24,6 +26,8 @@ export default props => {
 			) : (
 				false
 			)}
+
+			{mined && opened ? <Landmine /> : false}
 		</View>
 	)
 }
@@ -46,6 +50,10 @@ const styled = StyleSheet.create({
 		borderColor: '#777',
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	exploded: {
+		backgroundColor: 'red',
+		borderColor: 'red'
 	},
 	label: {
 		fontWeight: 'bold',
