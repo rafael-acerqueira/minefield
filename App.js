@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert } from 'react-native'
 import params from './src/params'
 import MineField from './src/components/Minefield'
 import Header from './src/components/Header'
+import LevelSelection from './src/screens/LevelSelection'
 import {
 	createLandmineBoard,
 	openField,
@@ -29,14 +30,16 @@ const App = () => {
 			landMinesAmount()
 		),
 		won: false,
-		lost: false
+		lost: false,
+		showLevelSelection: false
 	}
 
 	const newGame = () => {
-		const { board, won, lost } = INITIAL_STATE
+		const { board, won, lost, showLevelSelection } = INITIAL_STATE
 		setBoard(board)
 		setLost(lost)
 		setWon(won)
+		setLevelSelection(showLevelSelection)
 	}
 
 	const onOpenField = (row, column) => {
@@ -71,15 +74,29 @@ const App = () => {
 		setWon(youWon)
 	}
 
+	const onLevelSelected = level => {
+		params.difficultLevel = level
+		newGame()
+	}
+
 	const [board, setBoard] = useState(INITIAL_STATE.board)
 	const [lost, setLost] = useState(INITIAL_STATE.lost)
 	const [won, setWon] = useState(INITIAL_STATE.won)
+	const [levelSelection, setLevelSelection] = useState(
+		INITIAL_STATE.showLevelSelection
+	)
 
 	return (
 		<View style={styled.container}>
+			<LevelSelection
+				isVisible={levelSelection}
+				onLevelSelected={onLevelSelected}
+				onCancel={() => setLevelSelection(false)}
+			/>
 			<Header
 				flagsLeft={landMinesAmount() - flagsUsed(board)}
 				onNewGame={newGame}
+				onPress={() => setLevelSelection(true)}
 			/>
 			<View style={styled.board}>
 				<MineField

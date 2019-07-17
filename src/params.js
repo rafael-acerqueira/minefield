@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native'
 
-const difficultLevel = {
+export const difficultLevel = {
 	easy: 0.1,
 	normal: 0.2,
 	hard: 0.3
