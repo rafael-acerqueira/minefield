@@ -102,7 +102,7 @@ export const showLandMines = board =>
 
 export const toggleFlag = (board, row, column) => {
 	const field = board[row][column]
-	field.flagged = !field.flagged
+	if (!field.opened) field.flagged = !field.flagged
 }
 
 export const flagsUsed = board =>
