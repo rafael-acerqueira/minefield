@@ -99,3 +99,8 @@ export const showLandMines = board =>
 	fields(board)
 		.filter(field => field.mined)
 		.forEach(field => (field.opened = true))
+
+export const toggleFlag = (board, row, column) => {
+	const field = board[row][column]
+	field.flagged = !field.flagged
+}

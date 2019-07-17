@@ -7,7 +7,8 @@ import {
 	cloneBoard,
 	hasExplosion,
 	wonGame,
-	showLandMines
+	showLandMines,
+	toggleFlag
 } from './src/functions'
 import MineField from './src/components/Minefield'
 
@@ -50,6 +51,17 @@ const App = () => {
 		setWon(youWon)
 	}
 
+	const handleChangeFlag = (row, column) => {
+		const memoryBoard = cloneBoard(board)
+		toggleFlag(memoryBoard, row, column)
+		const youWon = wonGame(memoryBoard)
+		if (youWon) {
+			Alert.alert('Parabéns!', 'You Win! Espertinho(a)')
+		}
+		setBoard(memoryBoard)
+		setWon(youWon)
+	}
+
 	const [board, setBoard] = useState(createState().board)
 	const [lost, setLost] = useState(createState().lost)
 	const [won, setWon] = useState(createState().won)
@@ -61,7 +73,11 @@ const App = () => {
 				Grid size: {params.getRowsAmount()} x {params.getColumnsAmount()}
 			</Text>
 			<View style={styled.board}>
-				<MineField board={board} openField={onOpenField} />
+				<MineField
+					board={board}
+					openField={onOpenField}
+					handleChangeFlag={handleChangeFlag}
+				/>
 			</View>
 		</View>
 	)

@@ -21,7 +21,10 @@ export default props => {
 	}
 
 	return (
-		<TouchableWithoutFeedback onPress={props.onPress}>
+		<TouchableWithoutFeedback
+			onPress={props.onPress}
+			onLongPress={props.onLongPress}
+		>
 			<View style={styledField}>
 				{!mined && opened && nearMines > 0 ? (
 					<Text style={[styled.label, { color }]}>{nearMines}</Text>

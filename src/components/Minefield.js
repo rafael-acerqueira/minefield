@@ -9,6 +9,7 @@ export default props => {
 				key={indexColumn}
 				{...field}
 				onPress={() => props.openField(indexRow, indexColumn)}
+				onLongPress={() => props.handleChangeFlag(indexRow, indexColumn)}
 			/>
 		))
 		return (
