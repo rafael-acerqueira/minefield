@@ -104,3 +104,6 @@ export const toggleFlag = (board, row, column) => {
 	const field = board[row][column]
 	field.flagged = !field.flagged
 }
+
+export const flagsUsed = board =>
+	fields(board).filter(field => field.flagged).length
