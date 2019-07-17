@@ -6,11 +6,11 @@ export default props => (
 	<View style={styled.container}>
 		<View style={styled.flagContainer}>
 			<TouchableOpacity onPress={props.onPress} style={styled.flagButton}>
-				<Flag bigger />
+				<Flag selectLevel />
 			</TouchableOpacity>
-			<Text style={styled.flagsLeft}>{props.flagsLeft}</Text>
+			<Text style={styled.flagsLeft}>= {props.flagsLeft}</Text>
 		</View>
-		<TouchableOpacity style={styled.button} onPress={props.OnnewGame}>
+		<TouchableOpacity style={styled.button} onPress={props.onNewGame}>
 			<Text style={styled.buttonLabel}>Jogar Novamente</Text>
 		</TouchableOpacity>
 	</View>
@@ -19,7 +19,7 @@ export default props => (
 const styled = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: 'column',
+		flexDirection: 'row',
 		backgroundColor: '#EEE',
 		alignItems: 'center',
 		justifyContent: 'space-around',

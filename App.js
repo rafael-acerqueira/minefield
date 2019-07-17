@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Alert } from 'react-native'
 import params from './src/params'
+import MineField from './src/components/Minefield'
+import Header from './src/components/Header'
 import {
 	createLandmineBoard,
 	openField,
@@ -8,9 +10,9 @@ import {
 	hasExplosion,
 	wonGame,
 	showLandMines,
-	toggleFlag
+	toggleFlag,
+	flagsUsed
 } from './src/functions'
-import MineField from './src/components/Minefield'
 
 const App = () => {
 	const landMinesAmount = () => {
@@ -20,14 +22,21 @@ const App = () => {
 		return Math.ceil(cols * rows * params.difficultLevel)
 	}
 
-	const createState = () => {
-		const cols = params.getColumnsAmount()
-		const rows = params.getRowsAmount()
-		return {
-			board: createLandmineBoard(rows, cols, landMinesAmount()),
-			won: false,
-			lost: false
-		}
+	const INITIAL_STATE = {
+		board: createLandmineBoard(
+			params.getRowsAmount(),
+			params.getColumnsAmount(),
+			landMinesAmount()
+		),
+		won: false,
+		lost: false
+	}
+
+	const newGame = () => {
+		const { board, won, lost } = INITIAL_STATE
+		setBoard(board)
+		setLost(lost)
+		setWon(won)
 	}
 
 	const onOpenField = (row, column) => {
@@ -62,16 +71,16 @@ const App = () => {
 		setWon(youWon)
 	}
 
-	const [board, setBoard] = useState(createState().board)
-	const [lost, setLost] = useState(createState().lost)
-	const [won, setWon] = useState(createState().won)
+	const [board, setBoard] = useState(INITIAL_STATE.board)
+	const [lost, setLost] = useState(INITIAL_STATE.lost)
+	const [won, setWon] = useState(INITIAL_STATE.won)
 
 	return (
 		<View style={styled.container}>
-			<Text>Starting minefield</Text>
-			<Text>
-				Grid size: {params.getRowsAmount()} x {params.getColumnsAmount()}
-			</Text>
+			<Header
+				flagsLeft={landMinesAmount() - flagsUsed(board)}
+				onNewGame={newGame}
+			/>
 			<View style={styled.board}>
 				<MineField
 					board={board}
