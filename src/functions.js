@@ -76,7 +76,7 @@ export const openField = (board, row, column) => {
 			field.exploded = true
 		} else if (safeNeighborhood(board, row, column)) {
 			getNeighbors(board, row, column).forEach(n =>
-				openField(board, n.row, n.column)
+				openField(board, n.rowIndex, n.columnIndex)
 			)
 		} else {
 			const neighbors = getNeighbors(board, row, column)
@@ -93,8 +93,7 @@ export const hasExplosion = board =>
 const pending = field =>
 	(field.mined && !field.flagged) || (!field.mined && !field.opened)
 
-export const wonGame = board =>
-	fields(board).filter(field => field.pending).length === 0
+export const wonGame = board => fields(board).filter(pending).length === 0
 
 export const showLandMines = board =>
 	fields(board)
