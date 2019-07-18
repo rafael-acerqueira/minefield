@@ -19,11 +19,10 @@ const App = () => {
 	const landMinesAmount = () => {
 		const cols = params.getColumnsAmount()
 		const rows = params.getRowsAmount()
-
 		return Math.ceil(cols * rows * params.difficultLevel)
 	}
 
-	const INITIAL_STATE = {
+	const initialState = () => ({
 		board: createLandmineBoard(
 			params.getRowsAmount(),
 			params.getColumnsAmount(),
@@ -32,10 +31,10 @@ const App = () => {
 		won: false,
 		lost: false,
 		showLevelSelection: false
-	}
+	})
 
 	const newGame = () => {
-		const { board, won, lost, showLevelSelection } = INITIAL_STATE
+		const { board, won, lost, showLevelSelection } = initialState()
 		setBoard(board)
 		setLost(lost)
 		setWon(won)
@@ -46,7 +45,6 @@ const App = () => {
 		const memoryBoard = cloneBoard(board)
 		openField(memoryBoard, row, column)
 		const youLost = hasExplosion(memoryBoard)
-		console.debug(youLost)
 		const youWon = wonGame(memoryBoard)
 
 		if (youLost) {
@@ -79,11 +77,11 @@ const App = () => {
 		newGame()
 	}
 
-	const [board, setBoard] = useState(INITIAL_STATE.board)
-	const [lost, setLost] = useState(INITIAL_STATE.lost)
-	const [won, setWon] = useState(INITIAL_STATE.won)
+	const [board, setBoard] = useState(initialState().board)
+	const [lost, setLost] = useState(initialState().lost)
+	const [won, setWon] = useState(initialState().won)
 	const [levelSelection, setLevelSelection] = useState(
-		INITIAL_STATE.showLevelSelection
+		initialState().showLevelSelection
 	)
 
 	return (
